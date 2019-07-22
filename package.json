@@ -35,6 +35,7 @@
     }
   ],
   "dependencies": {
+    "cordova-lib": "^9.0.1",
     "xml2js": "^0.4"
   },
   "author": "Nikolay Demyankov for Nordnet Bank AB",

@@ -50,16 +50,21 @@ function setup(context) {
  * @return {String} name of the project
  */
 function getProjectName(ctx, projectRoot) {
-  var cordova_util = ctx.requireCordovaModule('cordova-lib/src/cordova/util');
+  var cordova_util = require('cordova-lib/src/cordova/util');
   var xml = cordova_util.projectConfig(projectRoot);
   var ConfigParser;
 
-  // If we are running Cordova 5.4 or abova - use parser from cordova-common.
+  // If we are running Cordova 5.4 or above - use parser from cordova-common.
   // Otherwise - from cordova-lib.
   try {
-    ConfigParser = ctx.requireCordovaModule('cordova-common/src/ConfigParser/ConfigParser');
+    try {
+      //cordova >= 9
+      ConfigParser = require('cordova-common').ConfigParser;
+    } catch (e) {
+      ConfigParser = require('cordova-common/src/ConfigParser/ConfigParser');
+    }
   } catch (e) {
-    ConfigParser = ctx.requireCordovaModule('cordova-lib/src/configparser/ConfigParser')
+    ConfigParser = require('cordova-lib/src/configparser/ConfigParser')
   }
 
   return new ConfigParser(xml).name();
